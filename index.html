@@ -1,378 +1,500 @@
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yairon Cid-Ruiz — Mathematics</title>
+  <meta name="description" content="Assistant Professor of Mathematics at NC State. Research in commutative algebra & algebraic geometry: blow-ups, Hilbert schemes, multidegrees, symbolic powers, syzygies, etc." />
+  <meta name="author" content="Yairon Cid-Ruiz" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* THEME TOKENS */
+    :root{ --bg:#0b0d12; --panel:#11151c; --ink:#e6edf3; --muted:#a9b3bf; --accent:#8bd3dd; --accent2:#c0a6ff; --line:#1b2230; }
+    :root[data-theme="light"]{ --bg:#ffffff; --panel:#f7f8fb; --ink:#0f172a; --muted:#475569; --accent:#0ea5e9; --accent2:#7c3aed; --line:#e5e7eb; }
+    :root[data-theme="dark"]{ --bg:#0b0d12; --panel:#11151c; --ink:#e6edf3; --muted:#a9b3bf; --accent:#8bd3dd; --accent2:#c0a6ff; --line:#1b2230; }
 
-  <title>Yairon Cid-Ruiz</title>
-  <meta name="description" content="Yairon's personal website">
-  <meta name="author" content="Yairon Cid-Ruiz">
-
-  <link rel="stylesheet" href="css/styles.css?v=1.0">  
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{ margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; color:var(--ink); background:radial-gradient(1200px 600px at 10% -10%, rgba(139,211,221,.15),transparent), radial-gradient(1000px 600px at 110% -20%, rgba(192,166,255,.15),transparent), var(--bg); line-height:1.6 }
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
+    header{ position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.1) blur(10px); background:color-mix(in oklab, var(--bg) 94%, transparent); border-bottom:1px solid var(--line) }
+    .wrap{ max-width:1100px; margin:auto; padding:0 20px }
+    .nav{ display:flex; align-items:center; justify-content:space-between; height:64px }
+    .nav a.brand{ font-weight:800; letter-spacing:.2px; color:var(--ink) }
+    .nav ul{ display:flex; gap:18px; list-style:none; padding:0; margin:0 }
+    .nav li a{ color:var(--muted); font-weight:600 }
+    .hero{ display:grid; grid-template-columns: 1.1fr .9fr; gap:32px; padding:56px 0 28px }
+    .card{ background:linear-gradient(180deg, color-mix(in srgb, var(--panel), transparent 8%), color-mix(in srgb, var(--panel), transparent 24%)); border:1px solid var(--line); border-radius:16px; padding:20px }
+    .tag{ display:inline-block; background:color-mix(in srgb, var(--accent) 12%, transparent); color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 60%, transparent); padding:2px 8px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.3px }
+    .title{ font-size:34px; line-height:1.2; margin:.3rem 0 1rem }
+    .sub{ color:var(--muted) }
+    .grid{ display:grid; gap:18px }
+    .grid.cols-3{ grid-template-columns:repeat(3,minmax(0,1fr)) }
+    .grid.cols-2{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+    .muted{ color:var(--muted) }
+    .pubs li{ margin:10px 0 }
+    .pubs small{ color:var(--muted) }
+    .kicker{ text-transform:uppercase; font-size:12px; letter-spacing:.2em; color:var(--muted); font-weight:700 }
+    .section{ padding:32px 0 }
+    .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:700; border:1px solid var(--line); padding:10px 14px; border-radius:12px; background:color-mix(in srgb, var(--panel), transparent 8%); color:var(--ink) }
+    .btn:hover{ transform:translateY(-1px) }
+    .list-plain{ list-style:none; padding:0; margin:0 }
+    .two{ columns: 2; column-gap: 22px }
+    footer{ border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); text-align:center }
+    img.portrait{ width:100%; max-width:320px; border-radius:14px; border:1px solid var(--line) }
+    .chip{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; background:color-mix(in srgb, var(--panel), transparent 8%); border:1px solid var(--line); font-weight:600 }
+    .news li{ margin:8px 0 }
+    .cv{ display:flex; gap:10px; flex-wrap:wrap }
+    .cv a{ border-radius:999px; padding:8px 12px; border:1px solid var(--line) }
+    .tools{ display:flex; flex-wrap:wrap; gap:8px }
+    .tools span{ font-size:12px; border:1px dashed var(--line); padding:4px 8px; border-radius:999px; color:var(--muted) }
+    details{ border:1px solid var(--line); border-radius:12px; padding:14px; background:color-mix(in srgb, var(--panel), transparent 10%) }
+    summary{ cursor:pointer; font-weight:800 }
+    .right{ text-align:right }
+    .theme{ cursor:pointer; border:none; background:transparent; font:inherit; color:var(--muted) }
+    @media (max-width:900px){ .hero{ grid-template-columns:1fr } .right{ text-align:left } .two{ columns: 1 } }
+  </style>
+  <script>
+    // Robust theme toggle using a data attribute (works on all browsers)
+    (function(){
+      const KEY = 'ycid-theme';
+      const html = document.documentElement;
+      const btnInit = () => {
+        const btn = document.getElementById('themeToggle');
+        if(!btn) return;
+        const setIcon = () => { btn.textContent = html.getAttribute('data-theme') === 'dark' ? '☀' : '☾'; };
+        btn.addEventListener('click', () => {
+          const cur = html.getAttribute('data-theme');
+          const next = cur === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', next);
+          localStorage.setItem(KEY, next);
+          setIcon();
+        });
+        setIcon();
+      };
+      document.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem(KEY);
+        if(saved === 'light' || saved === 'dark'){
+          html.setAttribute('data-theme', saved);
+        } else {
+          // Auto-detect on first visit
+          const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          html.setAttribute('data-theme', prefersLight ? 'light' : 'dark');
+        }
+        btnInit();
+      });
+    })();
+  </script>
 </head>
-
-<style>
-     body 
-     {
-         font-size:17px;
-     }
-
-</style>
-
-
 <body>
-  <script src="js/scripts.js"></script>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top">Yairon Cid‑Ruiz</a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#top">About</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#publications">Publications</a></li>
+		  <li><a href="#teaching">Teaching</a></li>
+          <li><a href="#codes">M2 Codes</a></li>
+          <li><a href="#writings">Notes</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button id="themeToggle" class="theme" title="Toggle theme" aria-label="Toggle theme">☾</button>
+    </div>
+  </header>
 
+  <main class="wrap" id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card">
+        <span class="tag">Assistant Professor • NC State</span>
+        <p class="sub">I am an Assistant Professor in the Department of Mathematics at North Carolina State University. 
+			</p>
+			
+        <div class="cv" style="margin-top:14px">
+          <a class="btn" href="ycid/cv.pdf" target="_blank">Curriculum Vitae (PDF)</a>
+        </div>
+		
+        <div class="tools" aria-label="Identifiers" style="margin-top:24px">
+          <span><a href="https://orcid.org/0000-0002-0941-4248" target="_blank" rel="noopener">ORCID</a></span>		  
+		  <span><a href="https://scholar.google.com/citations?user=aVWXzugAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a></span>
+		  <span><a href="https://arxiv.org/search/math?searchtype=author&query=Cid-Ruiz,+Y" target="_blank" rel="noopener">arXiv</a></span>		  
+        </div>
+      </div>
+      <div class="right">
+        <img class="portrait" src="ycid/photo.jpg" alt="Portrait of Yairon Cid‑Ruiz"/>
+        <ul class="list-plain muted" style="margin-top:12px">
+          <li>Department of Mathematics, North Carolina State University</li>
+          <li>SAS Hall 4214, Box 8205, Raleigh, NC 27695, USA</li>
+          <li><a href="mailto:ycidrui@ncsu.edu">ycidrui@ncsu.edu</a></li>
+        </ul>
+      </div>
+    </section>
 
+    <!-- ABOUT / AFFILIATIONS -->
+    <section id="about" class="section grid cols-1">
+      <div class="card">
+        <div class="kicker">Appointment</div>
+        <p>Assistant Professor, <a href="https://math.sciences.ncsu.edu/" target="_blank" rel="noopener">Department of Mathematics</a>, <a href="https://www.ncsu.edu/" target="_blank" rel="noopener">NC State University</a>.</p>
+        <p class="muted">Previously: FWO Postdoctoral Fellow (KU Leuven); Postdoc at Ghent University and at the Max Planck Institute for Mathematics in the Sciences (group of Bernd Sturmfels). PhD, Universitat de Barcelona (advisor: Carlos D'Andrea).</p>
+      </div>
+    </section>
 
-
-  <h1>Yairon Cid-Ruiz</h1>
-
-    <img src="ycid/photo.jpg"  style="width:314px;height:314px;" align="right">
-
-<hr>
-
- <p>
-  I am an Assistant Professor in the <a href="https://math.sciences.ncsu.edu" target="_blank"> Department of Mathematics</a> at <a href="https://www.ncsu.edu" target="_blank"> North Carolina State University</a>.
- </p>
-
-
-  <p>
-    I was an <a href="https://www.fwo.be/en/" target="_blank"> FWO</a>
-  postdoctoral fellow at <a
-  href="https://www.kuleuven.be/english/kuleuven/" target="_blank"> KU
-  Leuven</a>.
-  Previously, I was a postdoc at <a href="https://www.ugent.be/en"
-    target="_blank"> Ghent University</a> and the <a href="https://www.mis.mpg.de" target="_blank"> Max Planck Institute for Mathematics in the Sciences</a> in the group led by <a href="https://math.berkeley.edu/~bernd/" target="_blank"> Bernd Sturmfels</a>.
-  Before that, I was a PhD student at the  <a href="http://www.ub.edu/web/ub/en/index.html?"
-  target="_blank"> Universitat de Barcelona</a> under the supervision
-      of <a href="http://www.ub.edu/arcades/cdandrea.html" target="_blank"> Carlos D'Andrea</a>.
-  </p>
-
-  <p>
-    Here is my <a href="ycid/cv.pdf" target="_blank">Curriculum Vitae</a>.
-  </p>
-
-<h2> Contact </h2>
-  <p>
-  Address:  Department of Mathematics, SAS Hall 4214, North Carolina State University, Box 8205 Raleigh, NC 27695 USA.<br>
-  Email: <a href="mailto:ycidrui@ncsu.edu">ycidrui at ncsu dot edu</a>.
-</p>
-
-      
-
-
-  <hr>
-
-  <h2> Research </h2>
- <p> My main research interests lie in commutative algebra and algebraic geometry.
-  I like topics related to blow-up algebras, local cohomology,
- multiplicities, differential operators, Hilbert schemes, symbolic powers, syzygies, regularity and edge ideals.</p>
- 
- 
- <p> My research is partially supported by the <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2502321&HistoricalAwards=false" target="_blank">NSF grant DMS-2502321</a>. 
-	 Additionally, my travel is partially supported by a grant (<a href="https://www.simonsfoundation.org/grant/travel-support-for-mathematicians/?tab=rfa" target="_blank">Travel Support for Mathematicians</a>) from the Simons Foundation.	 
- </p>	 
-  <hr>
-
-
-  <h2> Publications & Preprints </h2>
-  <ol style="line-height:1.6;" start="0">
-    <li>
-    <i>Blow-up algebras in Algebra, Geometry and Combinatorics</i>, <a
-  href="ycid/PhD_thesis.pdf" target="_blank">PhD thesis</a>,
-  Univesitat de Barcelona (2019).
-    </li>    
-    
-    <li>
-        <i>Bounding the degrees of a minimal μ-basis for a rational
-    surface parametrization</i>, <br><b>Journal of Symbolic Computation</b> 95 (2019), 134–150, <a href="https://www.sciencedirect.com/science/article/pii/S0747717119300148" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1611.07506" target="_blank">arXiv:1611.07506</a>.
-    </li>
-
-    <li>
-      <i>A D-module approach on the equations of the Rees algebra</i>,
-      <br><b>Journal of Commutative Algebra</b> Vol 14 (2022), No. 2, 155-176, <a href="https://projecteuclid.org/journals/journal-of-commutative-algebra/volume-14/issue-2/A-D-modules-approach-on-the-equations-of-the-Rees/10.1216/jca.2022.14.155.full" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1706.06215" target="_blank">arXiv:1706.06215</a>.
-    </li>
-    
-    <li>
-      <i>Regularity and Gr&ouml;bner bases of the Rees algebra of edge
-      ideals of bipartite graphs</i>, <br><b>Le Matematiche</b> Vol 73 No 2 (2018), pp. 279–296, <a href="https://lematematiche.dmi.unict.it/index.php/lematematiche/article/view/1591" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1801.06731" target="_blank">arXiv:1801.06731</a>.
-    </li>
-    
-    <li>
-      (with Sepehr Jafari, Beatrice Picone and Navid Nemati),
-      <i>Regularity of bicyclic graphs and their powers</i>,
-      <br><b>Journal of Algebra and Its Applications</b> 19 (2020), no. 3, 2050057, 38 pp., <a href="https://www.worldscientific.com/doi/10.1142/S0219498820500577" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1802.07202" target="_blank">arXiv:1802.07202</a>.
-    </li>
-    
-    <li>
-      (with Laurent Busé and Carlos D'Andrea), <i>Degree and
-      birationality of multi-graded rational maps</i>,
-      <br><b>Proceedings of the London Mathematical Society</b> (3) 121 (2020) 743–787, <a href="https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.12336" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1805.05180" target="_blank">arXiv:1805.05180</a>.
-    </li>
-    
-    <li>
-       <i>Multiplicity of the saturated special fiber ring of height
-       two perfect ideals</i>, <br><b>Proceedings of the American Mathematical Society</b> 148 (2020), no. 1, 59–70, <a href="https://www.ams.org/journals/proc/0000-000-00/S0002-9939-2019-14693-1/" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1807.03189" target="_blank">arXiv:1807.03189</a>.
-    </li>
-    
-    <li>
-       (with Aron Simis), <i>Degree of rational maps and
-       specialization</i>, <br><b>International Mathematics
-       Research Notices</b>, rnaa183, 2020, <a
-       href="https://academic.oup.com/imrn/advance-article-abstract/doi/10.1093/imrn/rnaa183/5878285?redirectedFrom=fulltext"
-       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1901.06599" target="_blank">arXiv:1901.06599</a>.
-    </li>
-    
-    <li>
-       <i>Noetherian operators, primary submodules and symbolic
-       powers</i>, <br><b>Collectanea Mathematica</b> 72, pp. 175–202 (2021), <a href="https://link.springer.com/article/10.1007/s13348-020-00285-3" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1909.07253" target="_blank">arXiv:1909.07253</a>. 
-    </li>
-    
-    <li>
-        (with Vivek Mukundan), <i>Multiplicity of the saturated
-        special fiber ring of height three Gorenstein ideals</i>, <br><b>Acta Mathematica Vietnamica</b> 46, pp. 663–674 (2021), <a
-        href="https://link.springer.com/article/10.1007%2Fs40306-020-00410-1"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1909.13633" target="_blank">arXiv:1909.13633</a>.
-    </li>
-    
-    <li>
- 	<i>Mixed multiplicities and projective degrees of rational
- 	maps</i>, <br><b>Journal of Algebra</b> 566 (2021) pp. 136–162, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0021869320304671" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2001.00547" target="_blank">arXiv:2001.00547</a>.
-    </li>
-    
-    <li>
-	(with Roser Homs and Bernd Sturmfels), <i>Primary ideals and
-	their differential equations</i>, <br><b>Foundations
-	of Computational Mathematics</b> 21, pp. 1363–1399 (2021), <a href="https://link.springer.com/article/10.1007/s10208-020-09485-6" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2001.04700" target="_blank">arXiv:2001.04700</a>.
-    </li>    
-
-    <li>
-	(with Marc Chardin and Aron Simis), <i>Generic freeness of
-	local cohomology and graded specialization</i>, 
-    <br><b>Transactions of the American Mathematical Society</b> 375
-	(2022), no. 1, 87–109, <a
-	href="https://www.ams.org/journals/tran/0000-000-00/S0002-9947-2021-08316-6/"
-	target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2002.12053" target="_blank">arXiv:2002.12053</a>.
-    </li>
-
-    <li>
-       (with Federico Castillo, Binglin Li, Jonathan Montaño and Naizhen Zhang), <i>When are multidegrees positive?</i>,
-       <br><b>Advances in Mathematics</b> 374, 2020, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0001870820304102?dgcid=rss_sd_all" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2005.07808" target="_blank">arXiv:2005.07808</a>.
-    </li>
-	
-	<li>
-		(with Federico Castillo, Binglin Li, Jonathan Montaño and Naizhen Zhang), <i>When are multidegrees
-		positive?</i>, <br><b>FPSAC 2021 Proceedings</b>, Séminaire Lotharingien de Combinatoire 85B (2021),
-		Art. 46, 12 pp, <a href="https://www.mat.univie.ac.at/~slc/wpapers/FPSAC2021/46Castillo.pdf" target="_blank">journal version</a>.
-	</li>	
-	
-
-    <li>
-       (with Jonathan Montaño), <i>Convex bodies and graded families
-       of monomial ideals</i>, <br><b>Revista Matemática Iberoamericana</b> 38 (2022), no. 6, 2033–2056, <a href="https://ems.press/journals/rmi/articles/7155470" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2010.07918" target="_blank">arXiv:2010.07918</a>.
-    </li>
-
-    <li>
-       (with Jonathan Montaño), <i>Mixed mulitplicities of graded
-       families of ideals</i>, <br><b>Journal of Algebra</b> 590 (2022) 394–412, <a href="https://www.sciencedirect.com/science/article/pii/S0021869321004774"
-       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2010.11862" target="_blank">arXiv:2010.11862</a>.
-    </li>
-
-    <li>
-       <i>Equations and multidegrees for inverse symmetric matrix
-       pairs</i>, <br><b>Le Matematiche</b> Vol. LXXVI (2021) - Issue II,
-       pp. 369–381, <a
-       href="https://lematematiche.dmi.unict.it/index.php/lematematiche/article/view/2257"
-       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2011.04616" target="_blank">arXiv:2011.04616</a>.
-    </li>
-    
-
-    <li>
-       (with Justin Chen, Marc Härkönen, Robert Krone and Anton
-       Leykin), <i>Noetherian Operators in Macaulay2</i>, <br><b>Journal
-       of Software for Algebra and Geometry</b> Vol. 12 (2022), 33–41,
-       <a href="https://msp.org/jsag/2022/12-1/p05.xhtml" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2101.01002" target="_blank">arXiv:2101.01002</a>.
-    </li>
-
-    <li>
-       (with Bernd Sturmfels), <i>Primary decomposition with
-       differential operators</i>, <br><b>International Mathematics
-       Research Notices</b>, rnac178, 2022, <a
-       href="https://academic.oup.com/imrn/advance-article-abstract/doi/10.1093/imrn/rnac178/6644733"
-       target="_blank">journal version</a>, <a
-       href="https://arxiv.org/abs/2101.03643"
-    target="_blank">arXiv:2101.03643</a>.
-    
-    </li>
-
-    <li>
-       (with Justin Chen), <i>Primary decomposition of modules: a
-       computational differential approach</i>, <br><b>Journal of Pure and
-       Applied Algebra</b> 226, 2022, <a
-       href="https://www.sciencedirect.com/science/article/abs/pii/S0022404922000767"
-       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2104.03385" target="_blank">arXiv:2104.03385</a>.
-    </li>
-
-     <li>
-       (with Fatemeh Mohammadi and Leonid Monin), <i>Multigraded
-       algebras and multigraded linear series</i>, <br><b>Journal of
-       the London Mathematical Society</b>, Volume 109, Issue 3
-       (2024), <a
-        href="https://doi.org/10.1112/jlms.12880"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2104.05397" target="_blank">arXiv:2104.05397</a>.
-    </li>
-
-     <li>
-        <i>Fiber-full modules and a local freeness criterion for local
-        cohomology modules</i>, <br><b>Mathematische Zeitschrift</b> 303,
-        30 (2023), <a
-        href="https://link.springer.com/article/10.1007/s00209-022-03190-6"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2106.07777" target="_blank">arXiv:2106.07777</a>.
-    </li>
-
-    
-
-     <li>
-        (with Ritvik Ramkumar), <i>The fiber-full scheme</i>, <br><b>Journal of Pure and
-       Applied Algebra</b>, <a
-        href="https://www.sciencedirect.com/science/article/abs/pii/S0022404925001847"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2108.13986" target="_blank">arXiv:2108.13986</a>.
-    </li>
-
-     <li>
-        (with Federico Castillo, Fatemeh Mohammadi and Jonathan Montaño), <i>Double Schubert polynomials do have saturated
-        Newton polytopes</i>, <br><b>Forum of
-    Mathematics, Sigma</b> (2023), Vol. 11:e100 1–9,
-        <a href="https://www.cambridge.org/core/journals/forum-of-mathematics-sigma/article/double-schubert-polynomials-do-have-saturated-newton-polytopes/36C89153BC7983895D9CF415902DD8D3"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2109.10299" target="_blank">arXiv:2109.10299</a>.
-    </li>
-
-    <li>
-        (with Oliver Clarke and Fatemeh Mohammadi), <i>A study of
-        nonlinear multiview varieties</i>, <br><b>Journal of Algebra</b> 620 (2023) 363–391, <a
-        href="https://www.sciencedirect.com/science/article/pii/S0021869323000091"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2112.06216" target="_blank">arXiv:2112.06216</a>.
-    </li>
-    
-
-    <li>
-        (with Ritvik Ramkumar), <i>A local study of the fiber-full
-        scheme</i>, <br><b>Journal of Algebra</b> 636 (2023) 248–278, <a
-        href="https://www.sciencedirect.com/science/article/pii/S0021869323004465"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2202.06652" target="_blank">arXiv:2202.06652</a>.
-    </li>
-
-    <li>
-        (with Claudia Polini and Bernd Ulrich), <i>Generalized
-        Jouanolou duality, weakly Gorenstein rings, and applications
-    to blowup algebras</i>, <br> <b>Journal für die reine und
-        angewandte Mathematik (Crelle's journal)</b>, <a
-        href="https://www.degruyterbrill.com/document/doi/10.1515/crelle-2025-0039/html"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2205.03837" target="_blank">arXiv:2205.03837</a>.
-    </li>
-
-     <li>
-        (with Alessio Caminata and Aldo Conca), <i>Multidegrees, prime
-        ideals, and non-standard gradings</i>, <br> <b>Advances in
-        Mathematics</b> 435 (2023) 109361, <a
-        href="https://www.sciencedirect.com/science/article/abs/pii/S0001870823005042?via%3Dihub"
-        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2208.07238" target="_blank">arXiv:2208.07238</a>.
-    </li>
-
-    <li>
-        (with Federico Castillo, Fatemeh Mohammadi and Jonathan
-    Montaño), <i>K-polynomials of multiplicity-free varieties</i>, <a href="https://arxiv.org/abs/2212.13091" target="_blank">arXiv:2212.13091</a>.
-    </li>
-
-    <li>
-        (with Ilya Smirnov), <i>Effective generic freeness and
-        applications to local cohomology</i>, <br> <b>Journal of the
-        London Mathematical Society</b>, Volume 110, Issue 4 (2024), <a href="http://dx.doi.org/10.1112/jlms.12995" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2302.08196" target="_blank">arXiv:2302.08196</a>.
-    </li>
-
-
-    <li>
-        <i>Relative mixed multiplicities and mixed Buchsbaum-Rim multiplicities</i>, <a href="https://arxiv.org/abs/2311.15105" target="_blank">arXiv:2311.15105</a>.
-    </li>
-
-     <li>
-        <i>Polar multiplicities and integral dependence</i>, <br> <b>International Mathematics
-       Research Notices</b> 2024, 00(0), 1–18, <a
-        href="https://doi.org/10.1093/imrn/rnae163" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2401.10198" target="_blank">arXiv:2401.10198</a>.
-    </li>
-    
-
-    <li>
-       (with Jack Jeffries), <i>Uniformity in nonreduced rings via Noetherian operators</i>, <br>
-	    <b>International Mathematics Research Notices</b> Vol 2025, Issue 17, Sep 2025, <a href="https://doi.org/10.1093/imrn/rnaf260" target="_blank">journal version</a>,
-	   <a href="https://arxiv.org/abs/2404.02057" target="_blank">arXiv:2404.02057</a>.
-    </li>
-
-    <li>
-       (with Claudia Polini and Bernd Ulrich), <i>Multidegrees, families, and integral dependence</i>, <a href="https://arxiv.org/abs/2405.07000" target="_blank">arXiv:2405.07000</a>.
-    </li>
-
-    <li>
-       (with Yupeng Li and Jacob P. Matherne), <i>Log-concavity of polynomials arising from equivariant cohomology</i>, <a href="https://arxiv.org/abs/2411.17572" target="_blank">arXiv:2411.17572</a>.
-    </li>
-	
-	<li>
-		(with Yupeng Li and Jacob P. Matherne), <i>Log-concavity of polynomials arising from equivariant
-		cohomology</i>, <br><b>FPSAC 2025 Proceedings</b>, Séminaire Lotharingien de Combinatoire 93B (2025)
-Art. 68, 12 pp, <a href="https://www.mat.univie.ac.at/~slc/wpapers/FPSAC2025/68.pdf" target="_blank">journal version</a>.
-	</li>	
-
-    <li>
-       <i>Mixed Segre zeta functions and their log-concavity</i>, <a href="https://arxiv.org/abs/2507.06424" target="_blank">arXiv:2507.06424</a>.
-    </li>
-	
-	
-	<li>
-		(with Jacob P. Matherne and Anna Shapiro), <i>Syzygies of polymatroidal ideals</i>, <a href="https://arxiv.org/abs/2507.13153" target="_blank">arXiv:2507.13153</a>.
-	</li>	
-    
-  </ol>
-
-  <hr>
-  
-  
-  <h2> M2 codes </h2>
-
-   <ul>
-	   <li> Related to <i>&ldquo;Mixed Segre zeta functions and their log-concavity&rdquo;</i>: <a href="mixed_Segre.m2" target="_blank">mixed_Segre.m2</a>.
-	   
-	   <li> Related to <i>&ldquo;Degree and birationality of multi-graded rational maps&rdquo;</i>:
-	        <ul>
-		       <li> A package for computing the degree and checking the birationality of a multi-graded rational map: <a href="http://www2.macaulay2.com/Macaulay2/doc/Macaulay2-1.16/share/doc/Macaulay2/MultiGradedRationalMap/html/" target="_blank">MultiGradedRationalMap.m2</a>. 
-			   </li>
-		       <li> A list of examples using this package: <a href="ycid/degComputationExamples.m2" target="_blank">degComputationExamples.m2</a>.</li>
-		   </ul>
-	    </li>
-	    <li> Related to <i>&ldquo;Primary ideals and their
-	    differential equations&rdquo;</i>: <a
-	    href="https://mathrepo.mis.mpg.de/PrimaryIdealsandTheirDifferentialEquations/index.html"
-	    target="_blank">https://mathrepo.mis.mpg.de/PrimaryIdealsandTheirDifferentialEquations/index.html</a>.</li>
-	    <li> Related to <i>&ldquo;Primary decomposition with differential operators&rdquo;</i>: <a href="https://mathrepo.mis.mpg.de/PrimaryDecompositionWithDifferentialOperators/index.html" target="_blank">https://mathrepo.mis.mpg.de/PrimaryDecompositionWithDifferentialOperators/index.html</a>.</li>  
-	  </ul>
+    <!-- RESEARCH -->
+    <section id="research" class="section">
+      <h2>Research</h2>
+      <p>My main research interests lie in commutative algebra and algebraic geometry. 
+			I am primary interest is in questions that arise in geometrical or combinatorial contexts and try to understand how their possible answers manifest in various algebraic structures or invariants.
+		  I often collaborate on problems at the interface of commutative algebra, algebraic geometry, and combinatorics. I like topics related to blow-up algebras, local cohomology, multiplicities, differential operators, Hilbert schemes, symbolic powers, syzygies, regularity and matroids.</p>
+      		  
+      <div class="card">
+        <div class="kicker">Support</div>
+		<p>My research is partially supported by the <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2502321&HistoricalAwards=false" target="_blank">NSF grant DMS-2502321</a>.</p> 
+	    <p>Additionally, my travel is partially supported by a grant (<a href="https://www.simonsfoundation.org/grant/travel-support-for-mathematicians/?tab=rfa" target="_blank">Travel Support for Mathematicians</a>) from the Simons Foundation.</p>        
+      </div>
 	  
+    </section>
 
- 
- <hr>
-      
-  
-  <h2> Writings </h2>
-  <ul>
-	<li> <a href="ycid/cohom_ring_matroid_Schubert.pdf" target="_blank">Graded Moebius algebras and the cohomology ring of matroid Schubert varieties</a>.
-	  
-    <li> <a href="ycid/thesis.pdf" target="_blank">Syzygies</a>, Postgraduate Diploma Dissertation at <a href="https://www.ictp.it" target="_blank">The Abdus Salam International Centre for Theoretical Physics</a>.</li>
-  </ul>
+    <!-- PUBLICATIONS  -->
+    <section id="publications" class="section">
+      <h2>Publications & Preprints</h2>
+      <ol class="pubs" style="line-height:1.6;" start="0">
+        
+		    <li>
+		    <i>Blow-up algebras in Algebra, Geometry and Combinatorics</i>, <a
+		  href="ycid/PhD_thesis.pdf" target="_blank">PhD thesis</a>,
+		  Univesitat de Barcelona (2019).
+		    </li>    
+    
+		    <li>
+		        <i>Bounding the degrees of a minimal μ-basis for a rational
+		    surface parametrization</i>, <br><b>Journal of Symbolic Computation</b> 95 (2019), 134–150, <a href="https://www.sciencedirect.com/science/article/pii/S0747717119300148" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1611.07506" target="_blank">arXiv:1611.07506</a>.
+		    </li>
 
-  <hr>
+		    <li>
+		      <i>A D-module approach on the equations of the Rees algebra</i>,
+		      <br><b>Journal of Commutative Algebra</b> Vol 14 (2022), No. 2, 155-176, <a href="https://projecteuclid.org/journals/journal-of-commutative-algebra/volume-14/issue-2/A-D-modules-approach-on-the-equations-of-the-Rees/10.1216/jca.2022.14.155.full" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1706.06215" target="_blank">arXiv:1706.06215</a>.
+		    </li>
+    
+		    <li>
+		      <i>Regularity and Gr&ouml;bner bases of the Rees algebra of edge
+		      ideals of bipartite graphs</i>, <br><b>Le Matematiche</b> Vol 73 No 2 (2018), pp. 279–296, <a href="https://lematematiche.dmi.unict.it/index.php/lematematiche/article/view/1591" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1801.06731" target="_blank">arXiv:1801.06731</a>.
+		    </li>
+    
+		    <li>
+		      (with Sepehr Jafari, Beatrice Picone and Navid Nemati),
+		      <i>Regularity of bicyclic graphs and their powers</i>,
+		      <br><b>Journal of Algebra and Its Applications</b> 19 (2020), no. 3, 2050057, 38 pp., <a href="https://www.worldscientific.com/doi/10.1142/S0219498820500577" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1802.07202" target="_blank">arXiv:1802.07202</a>.
+		    </li>
+    
+		    <li>
+		      (with Laurent Busé and Carlos D'Andrea), <i>Degree and
+		      birationality of multi-graded rational maps</i>,
+		      <br><b>Proceedings of the London Mathematical Society</b> (3) 121 (2020) 743–787, <a href="https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/plms.12336" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1805.05180" target="_blank">arXiv:1805.05180</a>.
+		    </li>
+    
+		    <li>
+		       <i>Multiplicity of the saturated special fiber ring of height
+		       two perfect ideals</i>, <br><b>Proceedings of the American Mathematical Society</b> 148 (2020), no. 1, 59–70, <a href="https://www.ams.org/journals/proc/0000-000-00/S0002-9939-2019-14693-1/" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1807.03189" target="_blank">arXiv:1807.03189</a>.
+		    </li>
+    
+		    <li>
+		       (with Aron Simis), <i>Degree of rational maps and
+		       specialization</i>, <br><b>International Mathematics
+		       Research Notices</b>, rnaa183, 2020, <a
+		       href="https://academic.oup.com/imrn/advance-article-abstract/doi/10.1093/imrn/rnaa183/5878285?redirectedFrom=fulltext"
+		       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1901.06599" target="_blank">arXiv:1901.06599</a>.
+		    </li>
+    
+		    <li>
+		       <i>Noetherian operators, primary submodules and symbolic
+		       powers</i>, <br><b>Collectanea Mathematica</b> 72, pp. 175–202 (2021), <a href="https://link.springer.com/article/10.1007/s13348-020-00285-3" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1909.07253" target="_blank">arXiv:1909.07253</a>. 
+		    </li>
+    
+		    <li>
+		        (with Vivek Mukundan), <i>Multiplicity of the saturated
+		        special fiber ring of height three Gorenstein ideals</i>, <br><b>Acta Mathematica Vietnamica</b> 46, pp. 663–674 (2021), <a
+		        href="https://link.springer.com/article/10.1007%2Fs40306-020-00410-1"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/1909.13633" target="_blank">arXiv:1909.13633</a>.
+		    </li>
+    
+		    <li>
+		 	<i>Mixed multiplicities and projective degrees of rational
+		 	maps</i>, <br><b>Journal of Algebra</b> 566 (2021) pp. 136–162, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0021869320304671" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2001.00547" target="_blank">arXiv:2001.00547</a>.
+		    </li>
+    
+		    <li>
+			(with Roser Homs and Bernd Sturmfels), <i>Primary ideals and
+			their differential equations</i>, <br><b>Foundations
+			of Computational Mathematics</b> 21, pp. 1363–1399 (2021), <a href="https://link.springer.com/article/10.1007/s10208-020-09485-6" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2001.04700" target="_blank">arXiv:2001.04700</a>.
+		    </li>    
 
-  
- 
-  
+		    <li>
+			(with Marc Chardin and Aron Simis), <i>Generic freeness of
+			local cohomology and graded specialization</i>, 
+		    <br><b>Transactions of the American Mathematical Society</b> 375
+			(2022), no. 1, 87–109, <a
+			href="https://www.ams.org/journals/tran/0000-000-00/S0002-9947-2021-08316-6/"
+			target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2002.12053" target="_blank">arXiv:2002.12053</a>.
+		    </li>
+
+		    <li>
+		       (with Federico Castillo, Binglin Li, Jonathan Montaño and Naizhen Zhang), <i>When are multidegrees positive?</i>,
+		       <br><b>Advances in Mathematics</b> 374, 2020, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0001870820304102?dgcid=rss_sd_all" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2005.07808" target="_blank">arXiv:2005.07808</a>.
+		    </li>
+	
+			<li>
+				(with Federico Castillo, Binglin Li, Jonathan Montaño and Naizhen Zhang), <i>When are multidegrees
+				positive?</i>, <br><b>FPSAC 2021 Proceedings</b>, Séminaire Lotharingien de Combinatoire 85B (2021),
+				Art. 46, 12 pp, <a href="https://www.mat.univie.ac.at/~slc/wpapers/FPSAC2021/46Castillo.pdf" target="_blank">journal version</a>.
+			</li>	
+	
+
+		    <li>
+		       (with Jonathan Montaño), <i>Convex bodies and graded families
+		       of monomial ideals</i>, <br><b>Revista Matemática Iberoamericana</b> 38 (2022), no. 6, 2033–2056, <a href="https://ems.press/journals/rmi/articles/7155470" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2010.07918" target="_blank">arXiv:2010.07918</a>.
+		    </li>
+
+		    <li>
+		       (with Jonathan Montaño), <i>Mixed mulitplicities of graded
+		       families of ideals</i>, <br><b>Journal of Algebra</b> 590 (2022) 394–412, <a href="https://www.sciencedirect.com/science/article/pii/S0021869321004774"
+		       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2010.11862" target="_blank">arXiv:2010.11862</a>.
+		    </li>
+
+		    <li>
+		       <i>Equations and multidegrees for inverse symmetric matrix
+		       pairs</i>, <br><b>Le Matematiche</b> Vol. LXXVI (2021) - Issue II,
+		       pp. 369–381, <a
+		       href="https://lematematiche.dmi.unict.it/index.php/lematematiche/article/view/2257"
+		       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2011.04616" target="_blank">arXiv:2011.04616</a>.
+		    </li>
+    
+
+		    <li>
+		       (with Justin Chen, Marc Härkönen, Robert Krone and Anton
+		       Leykin), <i>Noetherian Operators in Macaulay2</i>, <br><b>Journal
+		       of Software for Algebra and Geometry</b> Vol. 12 (2022), 33–41,
+		       <a href="https://msp.org/jsag/2022/12-1/p05.xhtml" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2101.01002" target="_blank">arXiv:2101.01002</a>.
+		    </li>
+
+		    <li>
+		       (with Bernd Sturmfels), <i>Primary decomposition with
+		       differential operators</i>, <br><b>International Mathematics
+		       Research Notices</b>, rnac178, 2022, <a
+		       href="https://academic.oup.com/imrn/advance-article-abstract/doi/10.1093/imrn/rnac178/6644733"
+		       target="_blank">journal version</a>, <a
+		       href="https://arxiv.org/abs/2101.03643"
+		    target="_blank">arXiv:2101.03643</a>.
+    
+		    </li>
+
+		    <li>
+		       (with Justin Chen), <i>Primary decomposition of modules: a
+		       computational differential approach</i>, <br><b>Journal of Pure and
+		       Applied Algebra</b> 226, 2022, <a
+		       href="https://www.sciencedirect.com/science/article/abs/pii/S0022404922000767"
+		       target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2104.03385" target="_blank">arXiv:2104.03385</a>.
+		    </li>
+
+		     <li>
+		       (with Fatemeh Mohammadi and Leonid Monin), <i>Multigraded
+		       algebras and multigraded linear series</i>, <br><b>Journal of
+		       the London Mathematical Society</b>, Volume 109, Issue 3
+		       (2024), <a
+		        href="https://doi.org/10.1112/jlms.12880"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2104.05397" target="_blank">arXiv:2104.05397</a>.
+		    </li>
+
+		     <li>
+		        <i>Fiber-full modules and a local freeness criterion for local
+		        cohomology modules</i>, <br><b>Mathematische Zeitschrift</b> 303,
+		        30 (2023), <a
+		        href="https://link.springer.com/article/10.1007/s00209-022-03190-6"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2106.07777" target="_blank">arXiv:2106.07777</a>.
+		    </li>
+
+    
+
+		     <li>
+		        (with Ritvik Ramkumar), <i>The fiber-full scheme</i>, <br><b>Journal of Pure and
+		       Applied Algebra</b>, <a
+		        href="https://www.sciencedirect.com/science/article/abs/pii/S0022404925001847"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2108.13986" target="_blank">arXiv:2108.13986</a>.
+		    </li>
+
+		     <li>
+		        (with Federico Castillo, Fatemeh Mohammadi and Jonathan Montaño), <i>Double Schubert polynomials do have saturated
+		        Newton polytopes</i>, <br><b>Forum of
+		    Mathematics, Sigma</b> (2023), Vol. 11:e100 1–9,
+		        <a href="https://www.cambridge.org/core/journals/forum-of-mathematics-sigma/article/double-schubert-polynomials-do-have-saturated-newton-polytopes/36C89153BC7983895D9CF415902DD8D3"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2109.10299" target="_blank">arXiv:2109.10299</a>.
+		    </li>
+
+		    <li>
+		        (with Oliver Clarke and Fatemeh Mohammadi), <i>A study of
+		        nonlinear multiview varieties</i>, <br><b>Journal of Algebra</b> 620 (2023) 363–391, <a
+		        href="https://www.sciencedirect.com/science/article/pii/S0021869323000091"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2112.06216" target="_blank">arXiv:2112.06216</a>.
+		    </li>
+    
+
+		    <li>
+		        (with Ritvik Ramkumar), <i>A local study of the fiber-full
+		        scheme</i>, <br><b>Journal of Algebra</b> 636 (2023) 248–278, <a
+		        href="https://www.sciencedirect.com/science/article/pii/S0021869323004465"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2202.06652" target="_blank">arXiv:2202.06652</a>.
+		    </li>
+
+		    <li>
+		        (with Claudia Polini and Bernd Ulrich), <i>Generalized
+		        Jouanolou duality, weakly Gorenstein rings, and applications
+		    to blowup algebras</i>, <br> <b>Journal für die reine und
+		        angewandte Mathematik (Crelle's journal)</b>, <a
+		        href="https://www.degruyterbrill.com/document/doi/10.1515/crelle-2025-0039/html"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2205.03837" target="_blank">arXiv:2205.03837</a>.
+		    </li>
+
+		     <li>
+		        (with Alessio Caminata and Aldo Conca), <i>Multidegrees, prime
+		        ideals, and non-standard gradings</i>, <br> <b>Advances in
+		        Mathematics</b> 435 (2023) 109361, <a
+		        href="https://www.sciencedirect.com/science/article/abs/pii/S0001870823005042?via%3Dihub"
+		        target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2208.07238" target="_blank">arXiv:2208.07238</a>.
+		    </li>
+
+		    <li>
+		        (with Federico Castillo, Fatemeh Mohammadi and Jonathan
+		    Montaño), <i>K-polynomials of multiplicity-free varieties</i>, <a href="https://arxiv.org/abs/2212.13091" target="_blank">arXiv:2212.13091</a>.
+		    </li>
+
+		    <li>
+		        (with Ilya Smirnov), <i>Effective generic freeness and
+		        applications to local cohomology</i>, <br> <b>Journal of the
+		        London Mathematical Society</b>, Volume 110, Issue 4 (2024), <a href="http://dx.doi.org/10.1112/jlms.12995" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2302.08196" target="_blank">arXiv:2302.08196</a>.
+		    </li>
+
+
+		    <li>
+		        <i>Relative mixed multiplicities and mixed Buchsbaum-Rim multiplicities</i>, <a href="https://arxiv.org/abs/2311.15105" target="_blank">arXiv:2311.15105</a>.
+		    </li>
+
+		     <li>
+		        <i>Polar multiplicities and integral dependence</i>, <br> <b>International Mathematics
+		       Research Notices</b> 2024, 00(0), 1–18, <a
+		        href="https://doi.org/10.1093/imrn/rnae163" target="_blank">journal version</a>, <a href="https://arxiv.org/abs/2401.10198" target="_blank">arXiv:2401.10198</a>.
+		    </li>
+    
+
+		    <li>
+		       (with Jack Jeffries), <i>Uniformity in nonreduced rings via Noetherian operators</i>, <br>
+			    <b>International Mathematics Research Notices</b> Vol 2025, Issue 17, Sep 2025, <a href="https://doi.org/10.1093/imrn/rnaf260" target="_blank">journal version</a>,
+			   <a href="https://arxiv.org/abs/2404.02057" target="_blank">arXiv:2404.02057</a>.
+		    </li>
+
+		    <li>
+		       (with Claudia Polini and Bernd Ulrich), <i>Multidegrees, families, and integral dependence</i>, <a href="https://arxiv.org/abs/2405.07000" target="_blank">arXiv:2405.07000</a>.
+		    </li>
+
+		    <li>
+		       (with Yupeng Li and Jacob P. Matherne), <i>Log-concavity of polynomials arising from equivariant cohomology</i>, <a href="https://arxiv.org/abs/2411.17572" target="_blank">arXiv:2411.17572</a>.
+		    </li>
+	
+			<li>
+				(with Yupeng Li and Jacob P. Matherne), <i>Log-concavity of polynomials arising from equivariant
+				cohomology</i>, <br><b>FPSAC 2025 Proceedings</b>, Séminaire Lotharingien de Combinatoire 93B (2025)
+		Art. 68, 12 pp, <a href="https://www.mat.univie.ac.at/~slc/wpapers/FPSAC2025/68.pdf" target="_blank">journal version</a>.
+			</li>	
+
+		    <li>
+		       <i>Mixed Segre zeta functions and their log-concavity</i>, <a href="https://arxiv.org/abs/2507.06424" target="_blank">arXiv:2507.06424</a>.
+		    </li>
+	
+	
+			<li>
+				(with Jacob P. Matherne and Anna Shapiro), <i>Syzygies of polymatroidal ideals</i>, <a href="https://arxiv.org/abs/2507.13153" target="_blank">arXiv:2507.13153</a>.
+			</li>	
+		
+		
+      </ol>
+    </section>
+
+    <!-- TEACHING -->
+    <section id="teaching" class="section">
+      <h2>Teaching</h2>
+        <div class="card">
+          <div class="kicker">@ NC State</div>
+  			<ul>
+				<li>Introduction to Toric Varieties, Fall 2025</li>
+				<li>Computer Algebra II, Spring 2025</li>
+				<li>Computer Algebra I, Fall 2024</li>
+			</ul>	
+        </div>
+        <div class="card">
+          <div class="kicker">@ KU Leuven</div>
+  			<ul>
+				<li>Supervisor of three Bachelor Projects in Pure Mathematics, Fall 2022</li>
+			</ul>	
+        </div>
+        <div class="card">
+          <div class="kicker">@ Ghent University</div>
+  			<ul>
+				<li>Calculus, Spring 2021</li>
+			</ul>	
+        </div>
+    </section>
+
+
+    <!-- CODES -->
+    <section id="codes" class="section">
+      <h2>Macaulay2 codes & resources</h2>
+      <ul>
+        <li>Mixed Segre zeta functions: <a href="ycid/mixed_Segre.m2" target="_blank">mixed_Segre.m2</a></li>
+        <li>Package for multi‑graded rational maps: <a href="https://www2.macaulay2.com/Macaulay2/doc/Macaulay2-1.21/share/Macaulay2/MultiGradedRationalMap.m2" target="_blank" rel="noopener">MultiGradedRationalMap.m2</a> + <a href="ycid/degComputationExamples.m2" target="_blank">examples</a>
+        <li>Primary ideals & their differential equations: <a href="https://mathrepo.mis.mpg.de/PrimaryIdealsandTheirDifferentialEquations/index.html" target="_blank" rel="noopener">MathRepo MPI Leipzig</a></li>
+        <li>Primary decomposition with differential operators: <a href="https://mathrepo.mis.mpg.de/PrimaryDecompositionWithDifferentialOperators/index.html" target="_blank" rel="noopener">MathRepo MPI Leipzig</a></li>
+      </ul>
+    </section>
+
+    <!-- WRITINGS -->
+    <section id="writings" class="section">
+      <h2>Notes</h2>
+      <ul>
+        <li><a href="ycid/cohom_ring_matroid_Schubert.pdf" target="_blank">Graded Moebius algebras and the cohomology ring of matroid Schubert varieties</a></li>
+        <li><a href="ycid/thesis.pdf" target="_blank">Syzygies</a>, Postgraduate Diploma Dissertation at <a href="https://www.ictp.it" target="_blank">The Abdus Salam International Centre for Theoretical Physics</a></li>
+      </ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p>Department of Mathematics<br/>SAS Hall 4214, Box 8205<br/>North Carolina State University<br/>Raleigh, NC 27695, USA</p>
+          <p><strong>Email:</strong> <a href="mailto:ycidrui@ncsu.edu">ycidrui@ncsu.edu</a></p>
+        </div>
+        <div class="card">
+          <p class="kicker">Office hours & visitors</p>
+          <p>Please email to arrange a meeting. Campus map and parking information are available on the department website.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+	<a href="https://clustrmaps.com/site/1bso8"  title="ClustrMaps"><img src="//www.clustrmaps.com/map_v2.png?d=yVXbwA-AFS7r6uGgxJbwOtivpbinn_9IhknQV8-GYfo&cl=ffffff" /></a>
+
+  <footer>
+    <div class="wrap">
+      <div>© <span id="y">2025</span> Yairon Cid‑Ruiz • Built for GitHub Pages</div>
+	  <!-- Visitor counter badge -->
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
